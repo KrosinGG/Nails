@@ -12,6 +12,14 @@ class PermanentData(CallbackData, prefix = "permanent"):
     actions: PermanentActions
     value: Optional[str] = None
 
+class EnterDateServiceActions(IntEnum):
+    now = auto()
+    tomorow = auto()
+
+class EnterDateServiceDate(CallbackData, prefix = "enter_date"):
+    actions = EnterDateServiceActions
+
+
 def permanent_keyboard():
     builder = InlineKeyboardBuilder()
 
@@ -28,11 +36,11 @@ def enter_date():
 
     builder.button(
         text = "Сьогодні",
-        callback_data="a"
+        callback_data=EnterDateServiceDate(actions=EnterDateServiceActions.now)
     )
     builder.button(
         text = "Завтра",
-        callback_data="a"
+        callback_data=EnterDateServiceDate(actions=EnterDateServiceActions.tomorow)
     )
     builder.button(
         text = "date +1",
@@ -50,3 +58,82 @@ def enter_date():
     builder.adjust(2,3)
 
     return builder.as_markup()
+
+def enter_time():
+    builder = InlineKeyboardBuilder()
+
+    builder.button(
+        text="10:00",
+        callback_data="a"
+    )
+
+    builder.button(
+        text="12:00",
+        callback_data="a"
+    )
+
+    builder.button(
+        text="14:00",
+        callback_data="a"
+    )
+
+    builder.adjust(1)
+
+    return builder.as_markup()
+
+def enter_pay():
+    builder = InlineKeyboardBuilder()
+
+    builder.button(
+        text="⚫️ Mono",
+        callback_data="a"
+    )
+
+    builder.button(
+        text="🟢 Privat",
+        callback_data="a"
+    )
+
+    builder.button(
+        text="💸 Готівка",
+        callback_data="a"
+    )
+
+    builder.adjust(2, 1)
+
+    return builder.as_markup()
+
+def confirm_entry():
+    builder = InlineKeyboardBuilder()
+
+    builder.button(
+        text="Підтвердити ✅",
+        callback_data="A"
+    )
+    
+    builder.button(
+        text="Відмінити ❌",
+        callback_data="A"
+    )
+
+    builder.adjust(1)
+
+    return builder.as_markup()
+
+def enter_reson_cancel():
+    builder = InlineKeyboardBuilder()
+
+    builder.button(
+        text="⏰ Змінити час запису",
+        callback_data="a"
+    )
+
+    builder.button(
+        text="📅  Змінити дату запису",
+        callback_data="a"
+    )
+
+    builder.button(
+        text="Відмінити ❌",
+        callback_data="a"
+    )
